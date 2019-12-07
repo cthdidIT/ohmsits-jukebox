@@ -7,6 +7,7 @@ export const FullPageSpinner = () => (
       position: "absolute",
       display: "flex",
       justifyContent: "center",
+      backgroundColor: 'white',
       alignItems: "center",
       width: "100vw",
       height: "100vh"
