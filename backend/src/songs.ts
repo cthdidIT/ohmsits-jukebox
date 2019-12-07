@@ -20,7 +20,7 @@ export const songs = [
   createSong(
     "För har ett didIT-gäng en enda gång - (old, but never framförd)",
     "",
-    false
+    true
   ),
   createSong("Fångad i en while-loop - Klassiker från 2013", "", false),
   createSong("Knacka massa kod - Klassiker  från 2013", "", false),
