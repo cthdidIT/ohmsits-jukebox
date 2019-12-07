@@ -40,11 +40,11 @@ html {
 .no-button:hover,
 .no-button:focus {
   background: #0053ba;
+
 }
 
 .no-button:focus {
-  outline: 1px solid #fff;
-  outline-offset: -4px;
+  outline: 0;
 }
 
 .no-button:active {

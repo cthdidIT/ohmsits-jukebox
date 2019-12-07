@@ -1,4 +1,4 @@
-import { map, sum, values } from "lodash";
+import { map, sortBy, sum, values } from "lodash";
 import * as React from "react";
 import { FormEvent, Suspense, useState } from "react";
 import { ReactComponent as ChevronDown } from "./chevron-down.svg";
@@ -70,7 +70,7 @@ const VotingArrows: React.FC<VotingArrowsProps> = ({
           borderRadius: "50%",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "center"
         }}
         className="no-button"
         onClick={() =>
@@ -82,7 +82,11 @@ const VotingArrows: React.FC<VotingArrowsProps> = ({
           })
         }
       >
-        <ChevronUp height={15} width={15} fill={upvoted ? "#f0f0f0" : "#ec5133"} />
+        <ChevronUp
+          height={15}
+          width={15}
+          fill={upvoted ? "#f0f0f0" : "#ec5133"}
+        />
       </button>
       <div style={{ padding: 5 }}>{sum(values(song.votes))}</div>
       <button
@@ -93,7 +97,7 @@ const VotingArrows: React.FC<VotingArrowsProps> = ({
           borderRadius: "50%",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "center"
         }}
         className="no-button"
         onClick={() =>
@@ -105,13 +109,18 @@ const VotingArrows: React.FC<VotingArrowsProps> = ({
           })
         }
       >
-        <ChevronDown height={15} width={15} fill={downvoted ? "#f0f0f0" : "#5d77bf"} />
+        <ChevronDown
+          height={15}
+          width={15}
+          fill={downvoted ? "#f0f0f0" : "#5d77bf"}
+        />
       </button>
     </div>
   );
 };
 
 const App: React.FC = () => {
+  const [enableSort, setEnableSort] = useState(false);
   const [signedIn, setSignedIn] = useState(window.localStorage.getItem("USER"));
   const [state, dispatch] = useServerState("ws://jukebox.horv.se/ws");
 
@@ -119,11 +128,16 @@ const App: React.FC = () => {
     return <FullPageSpinner />;
   }
 
+  const songs = state?.jukebox?.songs ?? [];
+
+  const sortedSongs = enableSort
+    ? sortBy(songs, s => -sum(values(s.votes)))
+    : songs;
   return (
     <div>
       {!signedIn && <LoginForm setSubmitted={setSignedIn} />}
       {signedIn &&
-        map(state?.jukebox?.songs ?? [], (song: any, id: string) => {
+        map(sortedSongs, (song: any, id: string) => {
           return (
             <div
               key={id}
@@ -144,6 +158,23 @@ const App: React.FC = () => {
             </div>
           );
         })}
+      <button
+        style={{
+          position: "fixed",
+          zIndex: 1,
+          right: 20,
+          bottom: 20,
+          background: enableSort ? "#4caf50" : "#f0f0f0",
+          color: enableSort ? '#fff': '#000',
+          borderRadius: "50%",
+          width: 70,
+          height: 70
+        }}
+        className={"no-button"}
+        onClick={() => setEnableSort(e => !e)}
+      >
+        Sort by votes
+      </button>
     </div>
   );
 };
