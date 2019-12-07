@@ -1,6 +1,6 @@
 import { map, sortBy, sum, values } from "lodash";
 import * as React from "react";
-import { FormEvent, Suspense, useState } from "react";
+import { FormEvent, Suspense, useEffect, useState } from "react";
 import { ReactComponent as ChevronDown } from "./chevron-down.svg";
 import { ReactComponent as ChevronUp } from "./chevron-up.svg";
 import { FullPageError } from "./FullPageError";
@@ -120,10 +120,27 @@ const VotingArrows: React.FC<VotingArrowsProps> = ({
   );
 };
 
+const USER_KEY = "USER";
+const SESSION_ID_KEY = "SESSION_ID";
+
 const App: React.FC = () => {
   const [enableSort, setEnableSort] = useState(false);
-  const [signedIn, setSignedIn] = useState(window.localStorage.getItem("USER"));
+  const [signedIn, setSignedIn] = useState<string | null>(
+    window.localStorage.getItem(USER_KEY)
+  );
   const [state, dispatch, error] = useServerState("ws://jukebox.horv.se/ws");
+
+  let sessionId = state && state.sessionId;
+  useEffect(() => {
+    if (
+      sessionId &&
+      window.localStorage.getItem(SESSION_ID_KEY) !== sessionId
+    ) {
+      window.localStorage.setItem(SESSION_ID_KEY, sessionId);
+      window.localStorage.removeItem(USER_KEY);
+      setSignedIn(null);
+    }
+  }, [sessionId]);
 
   if (error) {
     return <FullPageError />;
