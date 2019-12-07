@@ -17,7 +17,8 @@ wss.on("connection", function connection(ws) {
 
       store.dispatch(JSON.parse(message.toString()));
       let { users, ...state } = store.getState();
-      connections.forEach(conn => conn.send(state));
+      const statePayload = JSON.stringify(state);
+      connections.forEach(conn => conn.send(statePayload));
     } catch (e) {
       console.error(e);
     }
