@@ -1,5 +1,6 @@
 import { createStore, combineReducers } from "redux";
 import { VoteAction, VOTE, AUTHENTICATE_USER } from "./actions";
+const uuid = require("uuid/v3");
 
 interface User {
   name: string;
@@ -22,7 +23,7 @@ interface JukeboxState {
 
 const createSong = (name: string, description: string) => {
   return {
-    id: name.toLowerCase().replace(/ /g, "_"),
+    id: uuid(name, uuid.DNS),
     name,
     description,
     votes: {}
@@ -34,20 +35,35 @@ const songs = [
     "Du vet hur man gör med tangenterna",
     "En sång om gamlingar och vad de tillfört under oich kanske tillochmed efter sitt år i digIT"
   ),
-  createSong("Datakrisen - 1. Integrationsdebattle", ""),
-  createSong("Datakrisen - 2. Patetflyktingvals", ""),
-  createSong("Datakrisen - Vända hoodien efter vinden", ""),
-  createSong("Datakrisen - 3. Min rad kod", ""),
-  createSong("Datakrisen - 6. Systemkollaps", ""),
-  createSong("Datakrisen - 8. Ndushis tårar", ""),
-  createSong("Datakrisen - 4. Den där builden", ""),
-  createSong("Datakrisen - 7. Datalagringens spöke", ""),
-  createSong("Datakrisen - 5.Hela servern skramlar", ""),
-  createSong("Jag har bara Windows (Verkligen inte klar)", "")
-  //createSong("En feature kan va en bugg (EJ KLAR)", "")
-  //createSong("Internetsladd i hårddisken - Blå skärm", ""),
+
+  createSong("1177 - NYHET!", ""),
+  createSong("Skärmen är olidligt blå - NYHET!", ""),
+  createSong("Ohm - NYHET!", ""),
+  createSong("Tommy spelar in mig - NYHET (koooort)!", ""),
+  createSong(
+    "För har ett IT-gäng en enda gång - (old, but never framförd)",
+    ""
+  ),
+  createSong("Fångad i en while loop - Klassiker från 2013", ""),
+  createSong("Knacka massa kod - Klassiker  från 2013", ""),
+  createSong("Rolf och Roger - Klassiker från 2013", ""),
+  createSong("NullPointerException - Klassiker från 2013", ""),
+  createSong("Datakrisen en musikal HELA  -", ""),
+  createSong("Datakrisen #1 - Integrationsdebattle", ""),
+  createSong("Datakrisen #2 - Patetflyktingvals", ""),
+  createSong("Datakrisen #3 - Min rad kod", ""),
+  createSong("Datakrisen #4 - Den där builden", ""),
+  createSong("Datakrisen #5 - Hela servern skramlar", ""),
+  createSong("Datakrisen #6 - Systemkollaps", ""),
+  createSong("Datakrisen #7 - Datalagringens spöke", ""),
+  createSong("Datakrisen #8 - Ndushis tårar", ""),
+  createSong("Datakrisen #9 - Vända hoodien efter vinden", "")
+
+  //createSong("Jag har bara Windows (Verkligen inte klar)", "")
+  //createSong("En feature kan va en bugg", "") // ej klar
   //createSong("Ohm", ""),
   //createSong("Tester", ""),
+  //createSong("Internetsladd i hårddisken - Blå skärm", ""),
   //createSong("Internetsladd i hårddisken - 1177", ""),
   //createSong("Internetsladd i hårddisken - Tommy spelar in mig", ""),
 ];
