@@ -78,6 +78,4 @@ wss.on("connection", function connection(ws) {
     let { users, ...state } = store.getState();
     connections.forEach(conn => conn.send(JSON.stringify(state)));
   });
-
-  ws.send("something");
 });
