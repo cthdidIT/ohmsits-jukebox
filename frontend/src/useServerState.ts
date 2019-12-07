@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-type ServerState = any;
+export type ServerState = any;
 
-type ServerAction = { type: string };
+export type ServerAction = { type: string };
 
 export const useServerState = (
   url: string
