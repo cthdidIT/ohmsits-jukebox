@@ -14,6 +14,7 @@ interface Vote {
 
 interface Song {
   id: string;
+  new: boolean;
   name: string;
   votes: Record<string, number>;
 }
