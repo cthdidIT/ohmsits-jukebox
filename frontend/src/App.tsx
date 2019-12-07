@@ -1,6 +1,8 @@
 import { map, sum, values } from "lodash";
 import * as React from "react";
 import { FormEvent, Suspense, useState } from "react";
+import { ReactComponent as ChevronDown } from "./chevron-down.svg";
+import { ReactComponent as ChevronUp } from "./chevron-up.svg";
 import { FullPageSpinner } from "./FullPageSpinner";
 import { ServerAction, useServerState } from "./useServerState";
 
@@ -64,9 +66,11 @@ const VotingArrows: React.FC<VotingArrowsProps> = ({
         style={{
           width: 30,
           height: 30,
-          color: upvoted ? "#f0f0f0" : "#ec5133",
           backgroundColor: upvoted ? "#ec5133" : "#f0f0f0",
-          borderRadius: "50%"
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
         className="no-button"
         onClick={() =>
@@ -78,16 +82,18 @@ const VotingArrows: React.FC<VotingArrowsProps> = ({
           })
         }
       >
-        ⬆
+        <ChevronUp height={15} width={15} fill={upvoted ? "#f0f0f0" : "#ec5133"} />
       </button>
       <div style={{ padding: 5 }}>{sum(values(song.votes))}</div>
       <button
         style={{
           width: 30,
           height: 30,
-          color: downvoted ? "#f0f0f0" : "#5d77bf",
           backgroundColor: downvoted ? "#5d77bf" : "#f0f0f0",
-          borderRadius: "50%"
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
         className="no-button"
         onClick={() =>
@@ -99,7 +105,7 @@ const VotingArrows: React.FC<VotingArrowsProps> = ({
           })
         }
       >
-        ⬇
+        <ChevronDown height={15} width={15} fill={downvoted ? "#f0f0f0" : "#5d77bf"} />
       </button>
     </div>
   );
