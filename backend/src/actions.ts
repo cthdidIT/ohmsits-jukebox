@@ -1,3 +1,5 @@
+import uuid from "uuid/v4";
+
 export const AUTHENTICATE_USER = "AUTHENTICATE_USER";
 export const VOTE = "VOTE";
 
@@ -6,24 +8,29 @@ enum DirectionVote {
   DOWN = -1
 }
 
-export const registerUser = (username: string, password: string) => {
+export const registerUser = (
+  name: string,
+  password: string
+): RegisterUserAction => {
   return {
     type: AUTHENTICATE_USER,
-    username,
-    password
+    name
   };
 };
 
+interface RegisterUserAction {
+  type: typeof AUTHENTICATE_USER;
+  name: string;
+}
+
 export const vote = (
-  token: string,
   voteDirection: DirectionVote,
   songId: string,
-  userId: string
+  username: string
 ): VoteAction => {
   return {
     type: VOTE,
-    userId,
-    token,
+    username,
     voteDirection,
     songId
   };
@@ -31,8 +38,7 @@ export const vote = (
 
 export interface VoteAction {
   type: typeof VOTE;
-  token: string;
-  userId: string;
+  username: string;
   voteDirection: DirectionVote;
   songId: string;
 }
