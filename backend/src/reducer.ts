@@ -22,7 +22,7 @@ interface JukeboxState {
 
 const createSong = (name: string, description: string) => {
   return {
-    id: name.toLowerCase().replace(" ", "_"),
+    id: name.toLowerCase().replace(/ /g, "_"),
     name,
     description,
     votes: {}
@@ -43,8 +43,8 @@ const songs = [
   createSong("Datakrisen - 4. Den där builden", ""),
   createSong("Datakrisen - 7. Datalagringens spöke", ""),
   createSong("Datakrisen - 5.Hela servern skramlar", ""),
-  createSong("Jag har bara Windows (Verkligen inte klar)", ""),
-  createSong("En feature kan va en bugg (EJ KLAR)", "")
+  createSong("Jag har bara Windows (Verkligen inte klar)", "")
+  //createSong("En feature kan va en bugg (EJ KLAR)", "")
   //createSong("Internetsladd i hårddisken - Blå skärm", ""),
   //createSong("Ohm", ""),
   //createSong("Tester", ""),
