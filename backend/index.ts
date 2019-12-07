@@ -8,7 +8,8 @@ const wss = new WebSocket.Server({ host: "0.0.0.0", port: 8080 });
 let connections: WebSocket[] = [];
 wss.on("connection", function connection(ws) {
   connections.push(ws);
-  ws.send(JSON.stringify(store.getState()));
+  let { users, ...state } = store.getState();
+  ws.send(JSON.stringify(state));
 
   ws.on("message", function incoming(message) {
     try {
