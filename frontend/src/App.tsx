@@ -156,7 +156,7 @@ const App: React.FC = () => {
             >
               <VotingArrows
                 dispatch={dispatch}
-                username={signedIn}
+                username={signedIn.toLowerCase()}
                 song={song}
               />
               <div>{song.name}</div>
