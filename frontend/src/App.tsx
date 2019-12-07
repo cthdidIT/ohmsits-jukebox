@@ -37,7 +37,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setSubmitted }) => {
 
 const App: React.FC = () => {
   const [signedIn, setSignedIn] = useState(window.localStorage.getItem("USER"));
-  const [state, dispatch] = useServerState("ws://jukebox.horv.se");
+  const [state, dispatch] = useServerState("ws://jukebox.horv.se/ws");
 
   return (
     <div>
