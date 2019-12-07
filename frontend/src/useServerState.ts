@@ -1,3 +1,4 @@
+import { debounce } from "lodash";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export type ServerState = any;
@@ -11,12 +12,9 @@ export const useServerState = (
   const [state, setState] = useState<ServerState | null>();
 
   useEffect(() => {
-    conn.current = new WebSocket(url);
-
-    conn.current.onmessage = (event: MessageEvent) => {
+    const onMessage = (event: MessageEvent) => {
       setState((prevState: ServerState) => {
         const state: ServerState = JSON.parse(event.data);
-
         if (!prevState || state.mutationCount > prevState.mutationCount) {
           return state;
         } else {
@@ -24,6 +22,14 @@ export const useServerState = (
         }
       });
     };
+
+    const setupConnection = () => {
+      conn.current = new WebSocket(url);
+      conn.current.onmessage = onMessage;
+      conn.current.onerror = debounce(setupConnection, 1000);
+    };
+
+    setupConnection();
   }, [url]);
 
   const dispatch = useCallback(<T extends ServerAction>(action: T): T => {
