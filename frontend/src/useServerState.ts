@@ -7,12 +7,14 @@ export type ServerAction = { type: string };
 
 export const useServerState = (
   url: string
-): [ServerState, <T extends ServerAction>(action: T) => T] => {
+): [ServerState, <T extends ServerAction>(action: T) => T, boolean] => {
   const conn = useRef<WebSocket | null>(null);
+  const [error, setError] = useState(false);
   const [state, setState] = useState<ServerState | null>();
 
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
+      setError(false);
       setState((prevState: ServerState) => {
         const state: ServerState = JSON.parse(event.data);
         if (!prevState || state.mutationCount > prevState.mutationCount) {
@@ -26,7 +28,11 @@ export const useServerState = (
     const setupConnection = () => {
       conn.current = new WebSocket(url);
       conn.current.onmessage = onMessage;
-      conn.current.onerror = debounce(setupConnection, 1000);
+      const onerror = debounce(setupConnection, 1000);
+      conn.current.onerror = () => {
+        setError(true);
+        onerror();
+      };
     };
 
     setupConnection();
@@ -39,5 +45,5 @@ export const useServerState = (
     return action;
   }, []);
 
-  return [state, dispatch];
+  return [state, dispatch, error];
 };

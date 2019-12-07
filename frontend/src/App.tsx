@@ -3,6 +3,7 @@ import * as React from "react";
 import { FormEvent, Suspense, useState } from "react";
 import { ReactComponent as ChevronDown } from "./chevron-down.svg";
 import { ReactComponent as ChevronUp } from "./chevron-up.svg";
+import { FullPageError } from "./FullPageError";
 import { FullPageSpinner } from "./FullPageSpinner";
 import { ServerAction, useServerState } from "./useServerState";
 
@@ -122,7 +123,11 @@ const VotingArrows: React.FC<VotingArrowsProps> = ({
 const App: React.FC = () => {
   const [enableSort, setEnableSort] = useState(false);
   const [signedIn, setSignedIn] = useState(window.localStorage.getItem("USER"));
-  const [state, dispatch] = useServerState("ws://jukebox.horv.se/ws");
+  const [state, dispatch, error] = useServerState("ws://jukebox.horv.se/ws");
+
+  if (error) {
+    return <FullPageError />;
+  }
 
   if (!state) {
     return <FullPageSpinner />;
@@ -165,7 +170,7 @@ const App: React.FC = () => {
           right: 20,
           bottom: 20,
           background: enableSort ? "#4caf50" : "#f0f0f0",
-          color: enableSort ? '#fff': '#000',
+          color: enableSort ? "#fff" : "#000",
           borderRadius: "50%",
           width: 70,
           height: 70
