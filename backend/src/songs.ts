@@ -16,7 +16,7 @@ export const songs = [
   //createSong("Tommy spelar in mig(koooort)!", "", true),
   createSong("Teknologens bön", "", true),
   createSong("git commit --amend", "", true),
-  createSong("Tester - inte klar :(", "", false),
+  createSong("Tester", "", true),
   createSong(
     "För har ett didIT-gäng en enda gång - (old, but never framförd)",
     "",

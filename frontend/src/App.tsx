@@ -176,7 +176,15 @@ const App: React.FC = () => {
                 username={signedIn.toLowerCase()}
                 song={song}
               />
-              <div>{song.name}</div>
+              <div>
+                {song.name}
+                {song.isNew && (
+                  <small style={{ color: "red", backgroundColor: "yellow" }}>
+                    {" "}
+                    "NEW!"
+                  </small>
+                )}
+              </div>
             </div>
           );
         })}
