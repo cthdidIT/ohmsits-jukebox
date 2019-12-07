@@ -20,16 +20,42 @@ interface JukeboxState {
   songs: Record<string, Song>;
 }
 
+const createSong = (name: string, description: string) => {
+  return {
+    id: name.toLowerCase().replace(" ", "_"),
+    name,
+    description,
+    votes: {}
+  };
+};
+
+const songs = [
+  createSong(
+    "Du vet hur man gör med tangenterna",
+    "En sång om gamlingar och vad de tillfört under oich kanske tillochmed efter sitt år i digIT"
+  ),
+  createSong("Datakrisen - 1. Integrationsdebattle", ""),
+  createSong("Datakrisen - 2. Patetflyktingvals", ""),
+  createSong("Datakrisen - Vända hoodien efter vinden", ""),
+  createSong("Datakrisen - 3. Min rad kod", ""),
+  createSong("Datakrisen - 6. Systemkollaps", ""),
+  createSong("Datakrisen - 8. Ndushis tårar", ""),
+  createSong("Datakrisen - 4. Den där builden", ""),
+  createSong("Datakrisen - 7. Datalagringens spöke", ""),
+  createSong("Datakrisen - 5.Hela servern skramlar", ""),
+  createSong("Jag har bara Windows (Verkligen inte klar)", ""),
+  createSong("En feature kan va en bugg (EJ KLAR)", "")
+  //createSong("Internetsladd i hårddisken - Blå skärm", ""),
+  //createSong("Ohm", ""),
+  //createSong("Tester", ""),
+  //createSong("Internetsladd i hårddisken - 1177", ""),
+  //createSong("Internetsladd i hårddisken - Tommy spelar in mig", ""),
+];
+
 const initialState: RootState = {
   mutationCount: 0,
   jukebox: {
-    songs: {
-      piano_man: {
-        id: "piano_man",
-        name: "Piano man",
-        votes: {}
-      }
-    }
+    songs: songs.reduce((songs, s) => ({ ...songs, [s.id]: s }), {})
   },
   users: {
     tejp: { name: "tejp" }
