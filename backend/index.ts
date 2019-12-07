@@ -1,6 +1,5 @@
 import WebSocket from "ws";
 import { store } from "./src/reducer";
-import { AUTHENTICATE_USER } from "./src/actions";
 
 console.log("Running jukebox backend");
 

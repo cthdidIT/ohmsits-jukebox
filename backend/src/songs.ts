@@ -10,10 +10,10 @@ const createSong = (name: string, description: string, isNew: boolean) => {
   };
 };
 export const songs = [
-  createSong("1177", "", true),
-  createSong("Blå skärm", "", true),
-  createSong("Ohm", "", true),
-  createSong("Tommy spelar in mig(koooort)!", "", true),
+  //createSong("1177", "", true),
+  //createSong("Blå skärm", "", true),
+  //createSong("Ohm", "", true),
+  //createSong("Tommy spelar in mig(koooort)!", "", true),
   createSong("Någons bön", "", true),
   createSong("git commit --amend", "", true),
   createSong("Tester - inte klar :(", "", false),

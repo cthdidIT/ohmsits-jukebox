@@ -2,6 +2,7 @@ import { createStore, combineReducers } from "redux";
 import { VoteAction, VOTE, AUTHENTICATE_USER } from "./actions";
 import { songs } from "./songs";
 const uuid = require("uuid/v3");
+const uuid4 = require("uuid/v4");
 
 interface User {
   name: string;
@@ -33,6 +34,7 @@ const createSong = (name: string, description: string) => {
 };
 
 const initialState: RootState = {
+  sessionId: uuid4(),
   mutationCount: 0,
   jukebox: {
     songs: songs.reduce((songs, s) => ({ ...songs, [s.id]: s }), {})
@@ -43,6 +45,7 @@ const initialState: RootState = {
 };
 
 interface RootState {
+  sessionId: string;
   jukebox: JukeboxState;
   mutationCount: number;
   users: Record<string, User>;
@@ -58,12 +61,12 @@ const userReducer = (
 ): Record<string, User> => {
   switch (action.type) {
     case AUTHENTICATE_USER:
-      const { name, password } = action;
+      const { name } = action;
       return {
         ...state,
         users: {
           ...state.users,
-          [action.name]: { name, password }
+          [action.name]: { name }
         }
       };
     case VOTE:
@@ -106,6 +109,7 @@ const jukebox = (
 
 export const store = createStore(
   combineReducers<RootState>({
+    sessionId: () => initialState.sessionId,
     jukebox,
     mutationCount: mutationCountReducer,
     users: userReducer
